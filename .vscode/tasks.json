@@ -1,0 +1,13 @@
+// .vscode/tasks.json
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "npm: dev",                // identic cu preLaunchTask
+      "type":  "npm",
+      "script": "dev",
+      "isBackground": true,
+      "problemMatcher": ["$vite-watch"]   // opţional; poţi lăsa şi []
+    }
+  ]
+}

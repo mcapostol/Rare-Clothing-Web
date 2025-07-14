@@ -1,0 +1,68 @@
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+:root {
+  --primary-blue: #3B82F6;
+  --primary-light: #EFF6FF;
+  --accent-orange: #F97316;
+  --text-dark: #1F2937;
+  --text-gray: #6B7280;
+  --bg-light: #F8FAFC;
+}
+
+body {
+  font-family: 'Inter', sans-serif;
+  background-color: var(--bg-light);
+  color: var(--text-dark);
+  line-height: 1.6;
+}
+
+.gradient-bg {
+  background: linear-gradient(135deg, #EFF6FF 0%, #DBEAFE 50%, #BFDBFE 100%);
+}
+
+.text-gradient {
+  background: linear-gradient(135deg, var(--primary-blue), var(--accent-orange));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.card-hover {
+  transition: all 0.3s ease;
+}
+
+.card-hover:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 20px 40px rgba(59, 130, 246, 0.15);
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, var(--primary-blue), var(--accent-orange));
+  transition: all 0.3s ease;
+}
+
+.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 25px rgba(59, 130, 246, 0.3);
+}
+
+.section-padding {
+  padding: 5rem 0;
+}
+
+@media (max-width: 768px) {
+  .section-padding {
+    padding: 4rem 0;
+  }
+}
+
+@media (max-width: 640px) {
+  .section-padding {
+    padding: 3rem 0;
+  }
+}
