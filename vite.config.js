@@ -2,6 +2,15 @@ import path from 'node:path';
 import react from '@vitejs/plugin-react';
 import { createLogger, defineConfig } from 'vite';
 
+import { defineConfig } from "vite";
+import react from "@vitejs/plugin-react";
+
+// repo-ul tău este /Rare-Clothing-Website-Final/
+export default defineConfig({
+  base: "/Rare-Clothing-Website-Final/",
+  plugins: [react()],
+});
+
 const isDev = process.env.NODE_ENV !== 'production';
 let inlineEditPlugin, editModeDevPlugin;
 
