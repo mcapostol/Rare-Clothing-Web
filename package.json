@@ -5,7 +5,9 @@
 	"private": true,
 	"scripts": {
 		"dev": "vite",
-		"build": "node tools/generate-llms.js || true && vite build",
+		"build": "vite build",
+		"predeploy": "npm run build",
+		"deploy": "gh-pages -d dist",
 		"preview": "vite preview"
 	},
 	"dependencies": {
@@ -43,6 +45,7 @@
 		"autoprefixer": "^10.4.16",
 		"eslint": "^8.57.1",
 		"eslint-config-react-app": "^7.0.1",
+		"gh-pages": "^6.3.0",
 		"postcss": "^8.4.31",
 		"tailwindcss": "^3.3.3",
 		"terser": "^5.39.0",
