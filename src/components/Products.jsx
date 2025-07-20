@@ -1,7 +1,6 @@
-
 import React from "react";
 import { motion } from "framer-motion";
-import { Eye, ShieldCheck, ArrowRight } from "lucide-react";
+import { ShieldCheck, ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { toast } from "@/components/ui/use-toast";
 
@@ -29,7 +28,7 @@ const Products = () => {
         "Multiple buzunare",
         "Manșete ajustabile",
       ],
-      imageSrc: "/public/jacheta-multifunctionala.jpg",
+      imageSrc: "jacheta-multifunctionala.jpg",
     },
     {
       code: "C42110",
@@ -37,7 +36,7 @@ const Products = () => {
       description:
         "Mănuși subțiri, flexibile, cu aderență excelentă pentru manipulări de precizie.",
       features: ["Acoperire nitril", "Flexibilitate superioară", "Respirabilitate"],
-      imageSrc: "/public/manusi-maxiflex.jpg",
+      imageSrc: "manusi-maxiflex.jpg",
     },
     {
       code: "C31105",
@@ -49,7 +48,7 @@ const Products = () => {
         "Benzi reflectorizante",
         "Impermeabilă",
       ],
-      imageSrc: "/public/jacheta-hivis.jpg",
+      imageSrc: "jacheta-hivis.jpg",
     },
     {
       code: "C52430",
@@ -57,7 +56,7 @@ const Products = () => {
       description:
         "Pantofi de protecție ușori și confortabili, cu design sport, ideali pentru logistică și depozite.",
       features: ["Bombeu compozit", "Greutate redusă", "Talpă flexibilă"],
-      imageSrc: "/public/pantofi-sport.jpg",
+      imageSrc: "pantofi-sport.jpg",
     },
     {
       code: "C32150",
@@ -69,7 +68,7 @@ const Products = () => {
         "Bretele ajustabile",
         "Material durabil",
       ],
-      imageSrc: "/public/pantaloni-pieptar.jpg",
+      imageSrc: "pantaloni-pieptar.jpg",
     },
     {
       code: "C43301",
@@ -77,7 +76,7 @@ const Products = () => {
       description:
         "Cască de protecție standard, cu sistem de ajustare rapidă, pentru șantiere și industrie.",
       features: ["Certificare EN 397", "Ventilație optimă", "Greutate redusă"],
-      imageSrc: "/public/casca-industriala.jpg",
+      imageSrc: "casca-industriala.jpg",
     },
     {
       code: "C39820",
@@ -85,7 +84,7 @@ const Products = () => {
       description:
         "Combinezon de protecție chimică, tip 5/6, pentru protecție împotriva particulelor și stropilor.",
       features: ["Protecție chimică", "Antistatic", "Glugă elastică"],
-      imageSrc: "/public/combinezon-unique.jpg",
+      imageSrc: "combinezon-unique.jpg",
     },
   ];
 
@@ -129,7 +128,7 @@ const Products = () => {
             >
               <div className="relative h-56 overflow-hidden">
                 <img
-                  src={product.imageSrc}
+                  src={`/${product.imageSrc}`}
                   alt={product.title}
                   className="w-full h-full object-cover"
                 />
