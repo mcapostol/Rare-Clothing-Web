@@ -17,7 +17,7 @@ const Products = () => {
         "Lamelă anti-perforație",
         "Talpă antiderapantă SRC",
       ],
-      imageSrc: "/bocanci.jpg",
+      imageSrc: "bocanci.jpg",
     },
     {
       code: "C30321",
