@@ -1,0 +1,14 @@
+// .vscode/launch.json  – varianta finală
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "type": "chrome",
+      "request": "launch",
+      "name": "Launch Chrome against Vite",
+      "url": "http://localhost:5173",
+      "webRoot": "${workspaceFolder}",
+      "preLaunchTask": "npm: dev"          // ← lansează task-ul definit mai jos
+    }
+  ]
+}
