@@ -5,17 +5,14 @@ import { Button } from "@/components/ui/button";
 import { toast } from "@/components/ui/use-toast";
 
 const Products = () => {
+  /*  ─────────────────────────  LISTA PRODUSE  ───────────────────────── */
   const renaniaProducts = [
     {
       code: "C51201",
-      title: "Bocanci de protecție PANDA S3",
+      title: "Bocanci de protecție PANDA S3",
       description:
-        "Bocanci de protecție din piele, cu bombeu metalic și lamelă anti-perforație.",
-      features: [
-        "Bombeu metalic",
-        "Lamelă anti-perforație",
-        "Talpă antiderapantă SRC",
-      ],
+        "Bocanci de protecție din piele, cu bombeu metalic și lamelă anti‑perforație.",
+      features: ["Bombeu metalic", "Lamelă anti‑perforație", "Talpă antiderapantă SRC"],
       imageSrc: "bocanci.jpg",
     },
     {
@@ -23,16 +20,12 @@ const Products = () => {
       title: "Jachetă de lucru multifuncțională",
       description:
         "Jachetă rezistentă, cu multiple buzunare, ideală pentru diverse medii de lucru.",
-      features: [
-        "Material bumbac/poliester",
-        "Multiple buzunare",
-        "Manșete ajustabile",
-      ],
+      features: ["Material bumbac/poliester", "Multiple buzunare", "Manșete ajustabile"],
       imageSrc: "jacheta-multifunctionala.jpg",
     },
     {
       code: "C42110",
-      title: "Mănuși de protecție MAXIFLEX",
+      title: "Mănuși de protecție MAXIFLEX",
       description:
         "Mănuși subțiri, flexibile, cu aderență excelentă pentru manipulări de precizie.",
       features: ["Acoperire nitril", "Flexibilitate superioară", "Respirabilitate"],
@@ -40,19 +33,15 @@ const Products = () => {
     },
     {
       code: "C31105",
-      title: "Jachetă reflectorizantă HI-VIS",
+      title: "Jachetă reflectorizantă HI‑VIS",
       description:
-        "Jachetă de înaltă vizibilitate, clasa 3, pentru siguranță maximă în condiții de lumină scăzută.",
-      features: [
-        "Certificare EN ISO 20471",
-        "Benzi reflectorizante",
-        "Impermeabilă",
-      ],
+        "Jachetă de înaltă vizibilitate, clasa 3, pentru siguranță maximă în condiții de lumină scăzută.",
+      features: ["Certificare EN ISO 20471", "Benzi reflectorizante", "Impermeabilă"],
       imageSrc: "jacheta-hivis.jpg",
     },
     {
       code: "C52430",
-      title: "Pantofi de protecție sport S1P",
+      title: "Pantofi de protecție sport S1P",
       description:
         "Pantofi de protecție ușori și confortabili, cu design sport, ideali pentru logistică și depozite.",
       features: ["Bombeu compozit", "Greutate redusă", "Talpă flexibilă"],
@@ -63,11 +52,7 @@ const Products = () => {
       title: "Pantaloni de lucru cu pieptar",
       description:
         "Pantaloni de lucru rezistenți cu pieptar și multiple buzunare, inclusiv pentru genunchiere.",
-      features: [
-        "Buzunare pentru genunchiere",
-        "Bretele ajustabile",
-        "Material durabil",
-      ],
+      features: ["Buzunare pentru genunchiere", "Bretele ajustabile", "Material durabil"],
       imageSrc: "pantaloni-pieptar.jpg",
     },
     {
@@ -75,26 +60,27 @@ const Products = () => {
       title: "Cască de protecție industrială",
       description:
         "Cască de protecție standard, cu sistem de ajustare rapidă, pentru șantiere și industrie.",
-      features: ["Certificare EN 397", "Ventilație optimă", "Greutate redusă"],
+      features: ["Certificare EN 397", "Ventilație optimă", "Greutate redusă"],
       imageSrc: "casca-industriala.jpg",
     },
     {
       code: "C39820",
       title: "Combinezon de unică folosință",
       description:
-        "Combinezon de protecție chimică, tip 5/6, pentru protecție împotriva particulelor și stropilor.",
+        "Combinezon de protecție chimică, tip 5/6, pentru protecție împotriva particulelor și stropilor.",
       features: ["Protecție chimică", "Antistatic", "Glugă elastică"],
       imageSrc: "combinezon-unique.jpg",
     },
   ];
 
-  const handleProductClick = (productTitle) => {
+  /*  ─────────────────────────  HANDLER BUTTON  ───────────────────────── */
+  const handleProductClick = (productTitle) =>
     toast({
-      title: "📄 Pagina de detalii este în construcție!",
-      description: `Poți solicita implementarea paginii pentru '${productTitle}' în următorul prompt! 🚀`,
+      title: "📄 Pagina de detalii este în construcție!",
+      description: `Poți solicita implementarea paginii pentru „${productTitle}” în următorul prompt! 🚀`,
     });
-  };
 
+  /*  ─────────────────────────  RENDER  ───────────────────────── */
   return (
     <section id="produse" className="section-padding gradient-bg">
       <div className="container mx-auto px-4">
@@ -126,9 +112,10 @@ const Products = () => {
               viewport={{ once: true }}
               className="bg-white rounded-2xl shadow-lg overflow-hidden card-hover flex flex-col"
             >
+              {/* imagine + cod */}
               <div className="relative h-56 overflow-hidden">
                 <img
-                  src={`/${product.imageSrc}`}
+                  src={`${import.meta.env.BASE_URL}${product.imageSrc}`}
                   alt={product.title}
                   className="w-full h-full object-cover"
                 />
@@ -137,21 +124,17 @@ const Products = () => {
                 </div>
               </div>
 
+              {/* conținut */}
               <div className="p-6 space-y-4 flex-grow flex flex-col">
                 <div className="flex-grow">
                   <h3 className="text-xl font-semibold text-gray-800 h-16">
                     {product.title}
                   </h3>
-                  <p className="text-gray-600 text-sm h-20">
-                    {product.description}
-                  </p>
+                  <p className="text-gray-600 text-sm h-20">{product.description}</p>
 
                   <ul className="space-y-2 mt-4">
                     {product.features.map((feature, idx) => (
-                      <li
-                        key={idx}
-                        className="flex items-center text-sm text-gray-700"
-                      >
+                      <li key={idx} className="flex items-center text-sm text-gray-700">
                         <ShieldCheck className="w-4 h-4 text-green-500 mr-2 flex-shrink-0" />
                         {feature}
                       </li>
