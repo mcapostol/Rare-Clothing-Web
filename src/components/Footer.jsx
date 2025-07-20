@@ -16,7 +16,6 @@ const Footer = () => {
     { name: "Acasă", href: "#hero" },
     { name: "Despre Noi", href: "#despre-noi" },
     { name: "Produse", href: "#produse" },
-    { name: "Galerie", href: "#galerie" },
     { name: "Contact", href: "#contact" }
   ];
 
