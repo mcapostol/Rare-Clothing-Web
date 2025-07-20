@@ -97,7 +97,7 @@ const Products = () => {
           </h2>
           <p className="text-lg sm:text-xl text-gray-600 max-w-3xl mx-auto mt-4">
             Oferim o gamă variată de echipamente de protecție de înaltă
-            calitate de la Renania, partenerul nostru de încredere.
+            calitate.
           </p>
         </motion.div>
 
