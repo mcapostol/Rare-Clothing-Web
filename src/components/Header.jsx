@@ -48,7 +48,7 @@ const Header = () => {
           </motion.div>
 
           <nav className="hidden md:flex items-center space-x-8">
-            {['Acasă', 'Despre Noi', 'Produse', 'Galerie', 'Contact'].map((item, index) => (
+            {['Acasă', 'Despre Noi', 'Produse', 'Contact'].map((item, index) => (
               <button
                 key={item}
                 onClick={() => scrollToSection(index === 0 ? 'hero' : item.toLowerCase().replace(' ', '-'))}
@@ -88,7 +88,7 @@ const Header = () => {
             className="md:hidden bg-white border-t"
           >
             <nav className="py-4 space-y-2">
-              {['Acasă', 'Despre Noi', 'Produse', 'Galerie', 'Contact'].map((item, index) => (
+              {['Acasă', 'Despre Noi', 'Produse', 'Contact'].map((item, index) => (
                 <button
                   key={item}
                   onClick={() => scrollToSection(index === 0 ? 'hero' : item.toLowerCase().replace(' ', '-'))}
