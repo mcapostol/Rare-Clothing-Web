@@ -113,7 +113,7 @@ const Hero = () => {
               <img  
                 alt="Echipă de producție Rare Clothing în atelierul de confecții"
                 className="rounded-2xl shadow-2xl w-full h-[350px] sm:h-[500px] object-cover"
-               src="/public/Poza-prima-pagina.jpg" />
+               src="Poza-prima-pagina.jpg" />
             </div>
             
             <div className="absolute -top-4 -right-4 w-24 h-24 bg-gradient-to-br from-blue-400 to-orange-400 rounded-full opacity-20"></div>
