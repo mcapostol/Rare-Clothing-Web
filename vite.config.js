@@ -2,30 +2,28 @@ import path from 'node:path';
 import react from '@vitejs/plugin-react';
 import { createLogger, defineConfig } from 'vite';
 
-// -------------------------------------------------------------
-//  Detect environment: development vs production
-// -------------------------------------------------------------
+//--------------------------------------------------------------
+// Detect environment (dev vs prod)
+//--------------------------------------------------------------
 const isDev = process.env.NODE_ENV !== 'production';
 
-// Lazy‑load only the visual‑editor plugins in dev mode so they
-// nu sunt incluse în bundle‑ul de producție.
+// Lazy‑load only in dev so plugin code nu intră în bundle‑ul prod
 let inlineEditPlugin, editModeDevPlugin;
 if (isDev) {
   inlineEditPlugin = (await import('./plugins/visual-editor/vite-plugin-react-inline-editor.js')).default;
   editModeDevPlugin = (await import('./plugins/visual-editor/vite-plugin-edit-mode.js')).default;
 }
 
-// -------------------------------------------------------------
-//  Helper scripts injected în <head> pentru raportare erori
-// -------------------------------------------------------------
+//--------------------------------------------------------------
+// Helper <script> snippets injectate în index.html
+//--------------------------------------------------------------
 const configHorizonsViteErrorHandler = `
 const observer = new MutationObserver((mutations) => {
   for (const mutation of mutations) {
     for (const addedNode of mutation.addedNodes) {
       if (
         addedNode.nodeType === Node.ELEMENT_NODE &&
-        (addedNode.tagName?.toLowerCase() === 'vite-error-overlay' ||
-          addedNode.classList?.contains('backdrop'))
+        (addedNode.tagName?.toLowerCase() === 'vite-error-overlay' || addedNode.classList?.contains('backdrop'))
       ) {
         handleViteOverlay(addedNode);
       }
@@ -73,7 +71,7 @@ console.error = function (...args) {
   for (let i = 0; i < args.length; i++) {
     const arg = args[i];
     if (arg instanceof Error) {
-      errorString = arg.stack || `${arg.name}: ${arg.message}`;
+      errorString = arg.stack || (arg.name + ': ' + arg.message);
       break;
     }
   }
@@ -90,27 +88,20 @@ const configWindowFetchMonkeyPatch = `
 const originalFetch = window.fetch;
 window.fetch = function (...args) {
   const url = args[0] instanceof Request ? args[0].url : args[0];
-  if (url.startsWith('ws:') || url.startsWith('wss:')) {
-    return originalFetch.apply(this, args);
-  }
-  return originalFetch
-    .apply(this, args)
+  if (url.startsWith('ws:') || url.startsWith('wss:')) return originalFetch.apply(this, args);
+  return originalFetch.apply(this, args)
     .then(async (response) => {
       const contentType = response.headers.get('Content-Type') || '';
-      const isDocumentResponse =
-        contentType.includes('text/html') || contentType.includes('application/xhtml+xml');
+      const isDocumentResponse = contentType.includes('text/html') || contentType.includes('application/xhtml+xml');
       if (!response.ok && !isDocumentResponse) {
         const responseClone = response.clone();
         const errorFromRes = await responseClone.text();
-        const requestUrl = response.url;
-        console.error(`Fetch error from ${requestUrl}: ${errorFromRes}`);
+        console.error(`Fetch error from ${response.url}: ${errorFromRes}`);
       }
       return response;
     })
     .catch((error) => {
-      if (!url.match(/\.html?$/i)) {
-        console.error(error);
-      }
+      if (!url.match(/\.html?$/i)) console.error(error);
       throw error;
     });
 };
@@ -131,12 +122,12 @@ const addTransformIndexHtml = {
   },
 };
 
-// Suprimă spam‑ul de warn‑ing‑uri din console.
+// Suprimă spam‑ul de warn‑ing‑uri în consolă în dev
 console.warn = () => {};
 
-// -------------------------------------------------------------
-//  Custom logger: ignoră CssSyntaxError din postcss
-// -------------------------------------------------------------
+//--------------------------------------------------------------
+// Custom logger – filtrăm CssSyntaxError de la postcss
+//--------------------------------------------------------------
 const logger = createLogger();
 const loggerError = logger.error.bind(logger);
 logger.error = (msg, options) => {
@@ -144,12 +135,11 @@ logger.error = (msg, options) => {
   loggerError(msg, options);
 };
 
-// -------------------------------------------------------------
-//  CONFIG PRINCIPAL VITE
-//  * "base" este acum '/' — potrivit pentru domeniu custom
-//  ------------------------------------------------------------
+//--------------------------------------------------------------
+// CONFIG VITE PRINCIPAL
+//--------------------------------------------------------------
 export default defineConfig({
-  base: '/', // <-- modificat din "/Rare-Clothing-Web/" în "/" pentru domeniu custom
+  base: '/', // Servim din rădăcină pe domeniul custom
   customLogger: logger,
   plugins: [
     ...(isDev ? [inlineEditPlugin(), editModeDevPlugin()] : []),
@@ -158,7 +148,6 @@ export default defineConfig({
   ],
   server: {
     cors: true,
-    headers: {},
     allowedHosts: true,
   },
   resolve: {
@@ -168,7 +157,7 @@ export default defineConfig({
     },
   },
   build: {
-    outDir: 'dist', // directorul implicit, menţionăm explicit pentru claritate
+    outDir: 'dist',
     rollupOptions: {
       external: [
         '@babel/parser',
