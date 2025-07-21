@@ -7,7 +7,7 @@ import { createLogger, defineConfig } from 'vite';
 //--------------------------------------------------------------
 const isDev = process.env.NODE_ENV !== 'production';
 
-// Lazy‑load only in dev so plugin code nu intră în bundle‑ul prod
+// Lazy‑load only in dev (plugin code nu intră în bundle‑ul prod)
 let inlineEditPlugin, editModeDevPlugin;
 if (isDev) {
   inlineEditPlugin = (await import('./plugins/visual-editor/vite-plugin-react-inline-editor.js')).default;
@@ -96,7 +96,7 @@ window.fetch = function (...args) {
       if (!response.ok && !isDocumentResponse) {
         const responseClone = response.clone();
         const errorFromRes = await responseClone.text();
-        console.error(`Fetch error from ${response.url}: ${errorFromRes}`);
+        console.error('Fetch error from ' + response.url + ': ' + errorFromRes);
       }
       return response;
     })
