@@ -1,124 +1,130 @@
-import React from 'react';
-import { motion } from 'framer-motion';
-import { ArrowRight, Shield, Award, Users } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import { toast } from '@/components/ui/use-toast';
+import React from "react";
+import { motion } from "framer-motion";
+import { ArrowRight, Shield, Award, Users } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { toast } from "@/components/ui/use-toast";
+
+/*  ░░ helper – scroll la #contact ░░ */
+const scrollContact = () => {
+  const el = document.getElementById("contact");
+  if (el) el.scrollIntoView({ behavior: "smooth" });
+};
 
 const Hero = () => {
-  const handleContactClick = () => {
-    const contactSection = document.getElementById('contact');
-    if (contactSection) {
-      contactSection.scrollIntoView({ behavior: 'smooth' });
-    }
-  };
-
-  const handleCatalogClick = () => {
-    toast({
-      title: "📋 Catalogul nu este încă implementat",
-      description: "Dar nu-ți face griji! Poți solicita această funcționalitate în următorul prompt! 🚀"
-    });
-  };
-
   return (
-    <section id="hero" className="relative min-h-screen flex items-center gradient-bg overflow-hidden pt-20 lg:pt-0">
-      <div className="absolute inset-0 bg-gradient-to-r from-blue-50/50 to-transparent"></div>
-      
-      <div className="container mx-auto px-4 relative z-10">
+    /* pt‑xxl >100vh + padding sus egal cu header (h‑20) */
+    <section
+      id="hero"
+      className="relative flex items-center min-h-[calc(100svh-5rem)] pt-20 lg:pt-0 overflow-hidden gradient-bg"
+    >
+      {/* ușor blur / fade spre dreapta */}
+      <div className="absolute inset-0 bg-gradient-to-r from-blue-50/60 to-transparent pointer-events-none" />
+
+      <div className="relative z-10 mx-auto max-w-screen-xl px-4 md:px-6 lg:px-8">
         <div className="grid lg:grid-cols-2 gap-12 items-center">
+          {/* ────────── IMG PRIMA PE MOBIL ────────── */}
+          <motion.div
+            initial={{ opacity: 0, x: 50 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8, delay: 0.2 }}
+            className="order-first lg:order-last relative"
+          >
+            <picture className="block rounded-2xl shadow-2xl overflow-hidden">
+              {/* 2x rez pentru retina; poți lăsa doar jpeg dacă nu ai webp */}
+              <source
+                srcSet={`${import.meta.env.BASE_URL}Poza-prima-pagina.jpg 1x, ${
+                  import.meta.env.BASE_URL
+                }Poza-prima-pagina.jpg 2x`}
+                type="image/jpeg"
+              />
+              <img
+                src={`${import.meta.env.BASE_URL}Poza-prima-pagina.jpg`}
+                alt="Echipă de producție Rare Clothing în atelier"
+                className="w-full h-auto aspect-[16/10] object-cover"
+                loading="lazy"
+              />
+            </picture>
+
+            {/* accente decorative */}
+            <span className="absolute -top-4 -right-4 w-24 h-24 rounded-full bg-gradient-to-br from-blue-400 to-orange-400 opacity-20" />
+            <span className="absolute -bottom-4 -left-4 w-32 h-32 rounded-full bg-gradient-to-br from-orange-400 to-blue-400 opacity-20" />
+          </motion.div>
+
+          {/* ────────── TEXT & CTA ────────── */}
           <motion.div
             initial={{ opacity: 0, x: -50 }}
-            animate={{ opacity: 1, x: 0 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
             transition={{ duration: 0.8 }}
-            className="space-y-8 text-center lg:text-left"
+            className="space-y-10 text-center lg:text-left"
           >
-            <div className="space-y-4">
+            {/* titlu + subtitlu */}
+            <div className="space-y-6">
               <motion.h1
                 initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.2 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: 0.1 }}
                 className="text-4xl sm:text-5xl lg:text-6xl font-bold leading-tight"
               >
-                <span className="text-gradient">RARE CLOTHING</span>
+                <span className="text-gradient">RARE CLOTHING</span>
                 <br />
-                <span className="text-gray-800">PRODUCTION SRL</span>
+                <span className="text-gray-800">PRODUCTION SRL</span>
               </motion.h1>
-              
+
               <motion.p
                 initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.4 }}
-                className="text-lg sm:text-xl text-gray-600 max-w-lg mx-auto lg:mx-0"
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: 0.25 }}
+                className="mx-auto lg:mx-0 max-w-lg text-base sm:text-lg text-gray-600"
               >
-                Producător român de încredere pentru îmbrăcăminte de lucru și echipamente de siguranță de înaltă calitate. 
-                Soluții profesionale adaptate nevoilor dumneavoastră.
+                Producător român de încredere pentru îmbrăcăminte de lucru și
+                echipamente de siguranță de înaltă calitate. Soluții
+                profesionale adaptate nevoilor dumneavoastră.
               </motion.p>
             </div>
 
+            {/* CTA */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.6 }}
-              className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start"
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.4 }}
+              className="flex flex-col sm:flex-row justify-center lg:justify-start gap-4"
             >
-              <Button 
-                onClick={handleContactClick}
+              <Button
+                onClick={scrollContact}
                 className="btn-primary text-white px-8 py-3 text-lg"
               >
-                Contactează-ne
+                Contactează‑ne
                 <ArrowRight className="ml-2 w-5 h-5" />
               </Button>
-              
-             
             </motion.div>
 
-            <motion.div
+            {/* bullets */}
+            <motion.ul
               initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.8 }}
-              className="grid grid-cols-3 gap-6 pt-8"
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.55 }}
+              className="grid grid-cols-3 gap-6 pt-4"
             >
-              <div className="text-center">
-                <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center mx-auto mb-2">
-                  <Shield className="w-6 h-6 text-blue-600" />
-                </div>
-                <p className="text-sm font-medium text-gray-700">Siguranță</p>
-                <p className="text-xs text-gray-500">Certificată</p>
-              </div>
-              
-              <div className="text-center">
-                <div className="w-12 h-12 bg-orange-100 rounded-lg flex items-center justify-center mx-auto mb-2">
-                  <Award className="w-6 h-6 text-orange-600" />
-                </div>
-                <p className="text-sm font-medium text-gray-700">Calitate</p>
-                <p className="text-xs text-gray-500">Premium</p>
-              </div>
-              
-              <div className="text-center">
-                <div className="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center mx-auto mb-2">
-                  <Users className="w-6 h-6 text-green-600" />
-                </div>
-                <p className="text-sm font-medium text-gray-700">Experiență</p>
-                <p className="text-xs text-gray-500">15+ Ani</p>
-              </div>
-            </motion.div>
-          </motion.div>
-
-          <motion.div
-            initial={{ opacity: 0, x: 50 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.8, delay: 0.3 }}
-            className="relative"
-          >
-            <div className="relative z-10">
-             <img
-                  alt="Echipă de producție Rare Clothing în atelierul de confecții"
-                  className="rounded-2xl shadow-2xl w-full h-[350px] sm:h-[500px] object-cover"
-                  src={`${import.meta.env.BASE_URL}Poza-prima-pagina.jpg`}   /* <-- calea corectă */
-               />  {/* ← SLASH‑ul de închidere */}
-            </div>
-            
-            <div className="absolute -top-4 -right-4 w-24 h-24 bg-gradient-to-br from-blue-400 to-orange-400 rounded-full opacity-20"></div>
-            <div className="absolute -bottom-4 -left-4 w-32 h-32 bg-gradient-to-br from-orange-400 to-blue-400 rounded-full opacity-20"></div>
+              {[
+                { icon: Shield, label: "Siguranță", sub: "Certificată" },
+                { icon: Award, label: "Calitate", sub: "Premium" },
+                { icon: Users, label: "Experiență", sub: "15+ Ani" },
+              ].map(({ icon: Icon, label, sub }) => (
+                <li key={label} className="text-center">
+                  <span className="mx-auto mb-2 grid h-12 w-12 place-items-center rounded-lg bg-blue-50 text-blue-600">
+                    <Icon className="h-6 w-6" />
+                  </span>
+                  <p className="text-sm font-medium text-gray-700">{label}</p>
+                  <p className="text-xs text-gray-500">{sub}</p>
+                </li>
+              ))}
+            </motion.ul>
           </motion.div>
         </div>
       </div>

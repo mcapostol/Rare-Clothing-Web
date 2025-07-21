@@ -1,106 +1,150 @@
+import React, { useState, useEffect } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { Menu, X, Phone, Mail } from "lucide-react";
+import { Button } from "@/components/ui/button";
 
-import React, { useState, useEffect } from 'react';
-import { motion } from 'framer-motion';
-import { Menu, X, Phone, Mail } from 'lucide-react';
-import { Button } from '@/components/ui/button';
+/* ─────────────────────────────────────────────────────────── */
+/* helper – previne scroll‑ul în body când meniul mobil e deschis */
+const toggleBodyScroll = (lock) => {
+  document.documentElement.style.overflow = lock ? "hidden" : "";
+};
 
+/* ─────────────────────────────────────────────────────────── */
 const Header = () => {
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [isScrolled, setIsScrolled] = useState(false);
+  const [open, setOpen] = useState(false);
+  const [elevate, setElevate] = useState(false);
 
+  /* shadow + blur după 50 px scroll */
   useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 50);
-    };
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
+    const onScroll = () => setElevate(window.scrollY > 50);
+    window.addEventListener("scroll", onScroll);
+    return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  const scrollToSection = (sectionId) => {
-    const element = document.getElementById(sectionId);
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
-      setIsMenuOpen(false);
-    }
+  /* blochez scroll‑ul când meniul e deschis */
+  useEffect(() => toggleBodyScroll(open), [open]);
+
+  /* smooth scroll utilă pe toate ancorele interne */
+  const goto = (id) => {
+    const el = document.getElementById(id);
+    if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
+    setOpen(false);
   };
+
+  const links = [
+    { label: "Acasă", to: "hero" },
+    { label: "Despre Noi", to: "despre-noi" },
+    { label: "Produse", to: "produse" },
+    { label: "Contact", to: "contact" },
+  ];
 
   return (
     <motion.header
-      initial={{ y: -100 }}
+      initial={{ y: -80 }}
       animate={{ y: 0 }}
-      className={`fixed top-0 w-full z-50 transition-all duration-300 ${
-        isScrolled || isMenuOpen ? 'bg-white/95 backdrop-blur-md shadow-lg' : 'bg-transparent'
+      className={`fixed inset-x-0 top-0 z-50 transition-colors duration-300 ${
+        elevate || open
+          ? "bg-white/90 backdrop-blur-md shadow-md"
+          : "bg-transparent"
       }`}
     >
-      <div className="container mx-auto px-4">
-        <div className="flex items-center justify-between h-20">
-          <motion.div
-            whileHover={{ scale: 1.05 }}
-            className="flex items-center space-x-3"
+      <div className="mx-auto max-w-screen-xl px-4 sm:px-6 lg:px-8">
+        <div className="flex h-16 items-center justify-between">
+          {/* logo */}
+          <button
+            onClick={() => goto("hero")}
+            className="flex items-center space-x-3 focus-visible:outline-none"
           >
-            <div className="w-12 h-12 bg-gradient-to-br from-blue-500 to-orange-500 rounded-lg flex items-center justify-center">
-              <span className="text-white font-bold text-xl">RC</span>
+            <div className="grid h-10 w-10 place-content-center rounded-lg bg-gradient-to-br from-blue-500 to-orange-500 text-white font-bold">
+              RC
             </div>
-            <div>
-              <span className="text-lg sm:text-xl font-bold text-gray-800">RARE CLOTHING</span>
-              <p className="text-xs sm:text-sm text-gray-600">PRODUCTION SRL</p>
+            <div className="text-left leading-tight hidden xs:block">
+              <span className="block text-base font-semibold text-gray-800">
+                RARE CLOTHING
+              </span>
+              <span className="block text-xs text-gray-600">
+                PRODUCTION SRL
+              </span>
             </div>
-          </motion.div>
+          </button>
 
+          {/* desktop nav */}
           <nav className="hidden md:flex items-center space-x-8">
-            {['Acasă', 'Despre Noi', 'Produse', 'Contact'].map((item, index) => (
+            {links.map((l) => (
               <button
-                key={item}
-                onClick={() => scrollToSection(index === 0 ? 'hero' : item.toLowerCase().replace(' ', '-'))}
-                className="text-gray-700 hover:text-blue-600 font-medium transition-colors duration-200"
+                key={l.to}
+                onClick={() => goto(l.to)}
+                className="relative font-medium text-gray-700/90 hover:text-blue-600 focus-visible:outline-none"
               >
-                {item}
+                {l.label}
+                {/* underline on hover */}
+                <span className="absolute left-0 -bottom-1 h-px w-full scale-x-0 bg-blue-600 transition-transform duration-200 group-hover/nav:scale-x-100"></span>
               </button>
             ))}
           </nav>
 
-          <div className="hidden lg:flex items-center space-x-4">
-            <div className="flex items-center space-x-2 text-sm text-gray-600">
-              <Phone className="w-4 h-4" />
-              <span>+40 721 091 991</span>
+          {/* contact info – apare doar ≥ lg */}
+          <div className="hidden lg:flex items-center space-x-4 text-sm text-gray-600">
+            <div className="flex items-center space-x-1">
+              <Phone className="h-4 w-4" />
+              <span>+40 721 091 991</span>
             </div>
-            <div className="flex items-center space-x-2 text-sm text-gray-600">
-              <Mail className="w-4 h-4" />
+            <div className="hidden xl:flex items-center space-x-1">
+              <Mail className="h-4 w-4" />
               <span>rarecp2016@gmail.com</span>
             </div>
           </div>
 
+          {/* burger */}
           <Button
             variant="ghost"
             size="icon"
             className="md:hidden"
-            onClick={() => setIsMenuOpen(!isMenuOpen)}
+            aria-label="Meniu"
+            onClick={() => setOpen((p) => !p)}
           >
-            {isMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+            {open ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
           </Button>
         </div>
-
-        {isMenuOpen && (
-          <motion.div
-            initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: 'auto' }}
-            exit={{ opacity: 0, height: 0 }}
-            className="md:hidden bg-white border-t"
-          >
-            <nav className="py-4 space-y-2">
-              {['Acasă', 'Despre Noi', 'Produse', 'Contact'].map((item, index) => (
-                <button
-                  key={item}
-                  onClick={() => scrollToSection(index === 0 ? 'hero' : item.toLowerCase().replace(' ', '-'))}
-                  className="block w-full text-left px-4 py-2 text-gray-700 hover:bg-blue-50 hover:text-blue-600"
-                >
-                  {item}
-                </button>
-              ))}
-            </nav>
-          </motion.div>
-        )}
       </div>
+
+      {/* OFF‑CANVAS MENU – doar mobil  */}
+      <AnimatePresence>
+        {open && (
+          <motion.nav
+            key="mobile-menu"
+            initial={{ height: 0, opacity: 0 }}
+            animate={{ height: "auto", opacity: 1 }}
+            exit={{ height: 0, opacity: 0 }}
+            transition={{ duration: 0.25 }}
+            className="md:hidden bg-white/95 backdrop-blur-md shadow-inner"
+          >
+            <ul className="divide-y divide-gray-100">
+              {links.map((l) => (
+                <li key={l.to}>
+                  <button
+                    onClick={() => goto(l.to)}
+                    className="block w-full px-6 py-4 text-left font-medium text-gray-700 hover:bg-blue-50 focus-visible:outline-none"
+                  >
+                    {l.label}
+                  </button>
+                </li>
+              ))}
+              {/* info contact în meniu */}
+              <li className="px-6 py-4 space-y-2 text-sm text-gray-600">
+                <div className="flex items-center space-x-2">
+                  <Phone className="h-4 w-4" />
+                  <span>+40 721 091 991</span>
+                </div>
+                <div className="flex items-center space-x-2">
+                  <Mail className="h-4 w-4" />
+                  <span>rarecp2016@gmail.com</span>
+                </div>
+              </li>
+            </ul>
+          </motion.nav>
+        )}
+      </AnimatePresence>
     </motion.header>
   );
 };
