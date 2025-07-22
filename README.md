@@ -28,4 +28,4 @@ git clone https://github.com/mcapostol/Rare-Clothing-Web
 npm i
 npm run dev               # http://localhost:5173
 
-![CodeQL](https://github.com/<user>/Rare-Clothing-Web/actions/workflows/codeql.yml/badge.svg)
+![CodeQL](https://github.com/mcapostol/Rare-Clothing-Web/actions/workflows/codeql.yml/badge.svg)
