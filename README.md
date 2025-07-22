@@ -3,8 +3,7 @@
   <a href="https://github.com/mcapostol/Rare-Clothing-Web/actions/workflows/ci.yml">
     <img alt="CI" src="https://github.com/mcapostol/Rare-Clothing-Web/actions/workflows/ci.yml/badge.svg?branch=main&style=flat-square">
   </a>
-  <a href="https://github.com/mcapostol/Rare-Clothing-Web/actions/workflows/codeql.yml">
-    <img alt="CodeQL" src="https://github.com/mcapostol/Rare-Clothing-Web/actions/workflows/codeql.yml/badge.svg?branch=main&style=flat-square">
+  
   </a>
   <img alt="License: MIT" src="https://img.shields.io/badge/License-MIT-yellow.svg?style=flat-square">
 </p>
